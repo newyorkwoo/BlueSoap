@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.custom.i18n.resources" value="globalMessages" />
+	
+	<!-- 限制上傳文件的總大小，以byte為單位 -->
+	<!-- 預設為2M(2*1024*1024=2097152 bytes) -->
+	<constant name="struts.multipart.maxSize" value="10000000" />
+
+	<package name="myPackage" namespace="/myNamespace" extends="struts-default">
+		<global-results>
+		<result name="error">/error.jsp</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception" result="error" />
+		</global-exception-mappings>
+		
+		<action name="myAction" class="com.shop.controller.ProductAction" method="addProduct">
+			
+            
+            <!-- Struts 2 提供了檔案上傳攔截器 fileUpload，可以實現檔案格式與大小的過濾 -->
+            <interceptor-ref name="fileUpload">                        <!-- 設定檔案上傳攔截器 -->
+       			<param name="maximumSize">20000000</param>              <!-- 限制上傳單個檔案的大小，以byte為單位  -->
+       			
+       			<param name="allowedTypes">image/gif,image/jpeg</param><!-- 限制上傳檔案的檔案型態，以逗號(,)隔開 -->
+       			<param name="allowedExtensions">.gif,.jpg</param>      <!-- 限制上傳檔案的延伸檔名，以逗號(,)隔開 -->
+       			                                                       <!-- 如以上兩者皆設限制的話，則必需兩者皆允許的
+       			                                                                                                                                       才能上傳， 而檔案型態則會優先做錯誤提示 -->
+  			</interceptor-ref>
+  			
+  			<interceptor-ref name="defaultStack" />                    <!-- 指定預設攔截器堆疊 -->
+    
+            <param name="saveDirectory">/rsc/image</param>       <!-- 自訂上傳的目地目錄 -->
+			
+			<result name="success">/fileUpload_success.jsp</result>
+			<result name="input">/form.jsp</result>
+			
+		</action>
+		
+	</package>
+	
+</struts>

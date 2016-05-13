@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator 1.0.2//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+
+<validators>
+	<field name="productVO.pdname">
+        <field-validator type="requiredstring">
+            <message key="productVO.pdname.required"/>
+        </field-validator>
+        
+        <field-validator type="stringlength">
+            <param name="minLength">2</param>
+            <param name="maxLength">10</param>
+            <message key="productVO.pdname.length"/>
+        </field-validator>
+    </field>
+</validators>
+
+ <!-- 註: Struts2 內建的常用驗證器可以在 lib/xwork-core-xxx.jar 中的 com.opensymphony.xwork2.validator.validators 底下的 default.xml 找到  -->
